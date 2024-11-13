@@ -1,31 +1,36 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const productRoute = require('./routes/product.route.js')
+const dotenv = require('dotenv')
+
+// Load environment variables
+dotenv.config()
 
 const app = express()
 
-//middleware
+// Middleware
 app.use(express.json())
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({ extended: false }))
 
-//routes
+// Routes
 app.use('/api/products', productRoute)
 
-//test
-app.get("/", (req, res)=>{
+// Test route
+app.get("/", (req, res) => {
     res.json("Hello from node API")
 })
 
-//db connnection
-mongoose.connect("mongodb+srv://gauravjain200024:root@learnmongodb.gmcpz.mongodb.net/learnMongoDb?retryWrites=true&w=majority&appName=LearnMongoDb")
-.then(()=>{
-    console.log(`connected to database`)
+console.log('MongoDB URL:', process.env.MONGO_DB_URL);
+// Database connection
+mongoose.connect(process.env.MONGO_DB_URL)
+    .then(() => {
+        console.log(`Connected to database`)
 
-    //app connection
-    app.listen(3000, ()=>{
-        console.log(`port 3000`)
+        // App connection
+        app.listen(3000, () => {
+            console.log(`Listening on port 3000`)
+        })
     })
-}).catch(()=>{
-    console.log(`database not connected`)
-})
-
+    .catch((error) => {
+        console.error(`Database connection error: ${error.message}`);
+    })
