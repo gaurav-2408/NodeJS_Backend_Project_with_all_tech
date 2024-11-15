@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const productRoute = require('./routes/product.route.js')
 const dotenv = require('dotenv')
+const logger = require('./logger.js')
 
 // Load environment variables
 dotenv.config()
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 })
 
 console.log('MongoDB URL:', process.env.MONGO_DB_URL);
+logger.error('an error occ from index.js')
 // Database connection
 mongoose.connect(process.env.MONGO_DB_URL)
     .then(() => {

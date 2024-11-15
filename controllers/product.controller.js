@@ -1,4 +1,5 @@
 // controller will have logic of API
+const logger = require('../logger.js')
 const Product = require('../models/product.model.js') 
 
 
@@ -7,6 +8,7 @@ const getProducts = async(req, res) =>{
         const product = await Product.find({})
         res.status(200).json(product)
     } catch (error) {
+        logger.error(error.message)
         res.status(500).json({message: error.message})
     }
 }
