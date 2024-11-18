@@ -35,4 +35,4 @@ mongoose.connect(process.env.MONGO_DB_URL)
     })
     .catch((error) => {
         console.error(`Database connection error: ${error.message}`);
-    })
+})
