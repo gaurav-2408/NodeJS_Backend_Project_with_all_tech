@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const productRoute = require('./routes/product.route.js')
+const appLogRoute = require('./routes/applog.route.js')
 const dotenv = require('dotenv')
 const logger = require('./logger.js')
 
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // Routes
 app.use('/api/products', productRoute)
+app.use('/api/applog', appLogRoute)
 
 // Test route
 app.get("/", (req, res) => {
