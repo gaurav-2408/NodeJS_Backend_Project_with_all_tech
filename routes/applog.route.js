@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const {getAppLogs, createAppLog} = require('../controllers/applog.controller')
+const {getAppLogs} = require('../controllers/applog.controller')
 
-router.get('/', getAppLogs)
-router.get('/:Appname', createAppLog)
+//router.get('/', getAppLogs)
+router.get('/:Appname', getAppLogs)
 
 module.exports = router
