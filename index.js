@@ -9,6 +9,7 @@ const logger = require('./logger.js')
 dotenv.config()
 
 const app = express()
+const PORT = process.env.PORT
 
 // Middleware
 app.use(express.json())
@@ -31,8 +32,8 @@ mongoose.connect(process.env.MONGO_DB_URL)
         console.log(`Connected to database`)
 
         // App connection
-        app.listen(3000, () => {
-            console.log(`Listening on port 3000`)
+        app.listen(PORT, () => {
+            console.log(`Listening on port ${PORT}`)
         })
     })
     .catch((error) => {
