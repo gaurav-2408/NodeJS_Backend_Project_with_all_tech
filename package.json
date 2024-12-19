@@ -13,10 +13,13 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "express-session": "^1.18.1",
     "google-auth-library": "^9.15.0",
     "mongodb": "^6.10.0",
     "mongoose": "^8.7.2",
     "nodemon": "^3.1.7",
+    "passport": "^0.7.0",
+    "passport-github": "^1.1.0",
     "snyk": "^1.1294.2",
     "winston": "^2.4.6"
   }

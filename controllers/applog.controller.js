@@ -54,7 +54,7 @@ const createAppLog = async (AppName) => {
             console.log('No valid logs to insert.');
         }
     } catch (error) {
-        console.error(`Error reading or inserting logs: ${error.message}`);
+        console.error(`Error reading or inserting of logs: ${error.message}`);
         logger.error(error.message);
     }
 };
