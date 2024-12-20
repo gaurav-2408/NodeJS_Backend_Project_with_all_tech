@@ -8,10 +8,8 @@ passport.use(new GitHubStrategy({
     clientSecret: process.env.CLIENT_SECRET.toString(),
     callbackURL: "http://localhost:3000/auth/github/callback"
   },
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ githubId: profile.id }, function (err, user) {
-        console.log(profile)
-        cb(err, user);
-    });
+  function (accessToken, refreshToken, profile, cb) {
+    console.log("GitHub Profile:", profile); // Debugging purposes
+    cb(null, profile); // Pass the profile directly
   }
 ));

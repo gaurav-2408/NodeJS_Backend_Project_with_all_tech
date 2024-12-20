@@ -15,7 +15,6 @@ const PORT = process.env.PORT
 
 // Middleware
 app.use(passport.initialize());
-//app.use(passport.session());
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
@@ -35,24 +34,33 @@ app.get('/auth/github',
     passport.authenticate('github'));
   
 app.get('/auth/github/callback', 
-    passport.authenticate('github', { failureRedirect: '/login' }),
+    passport.authenticate('github', { failureRedirect: '/login', session: false}),
     function(req, res) {
       // Successful authentication, redirect home.
       res.redirect('/');
 });
 
+// passport.authenticate('github', { session: false }),
+// (req, res) => {
+//     res.json(req.user); // Handle the user directly without sessions
+// }
+
 console.log('MongoDB URL:', process.env.MONGO_DB_URL);
 logger.error('an error occ from index.js')
 // Database connection
-mongoose.connect(process.env.MONGO_DB_URL)
-    .then(() => {
-        console.log(`Connected to database`)
+// mongoose.connect(process.env.MONGO_DB_URL)
+//     .then(() => {
+//         console.log(`Connected to database`)
 
-        // App connection
-        app.listen(PORT, () => {
-            console.log(`Listening on port ${PORT}`)
-        })
-    })
-    .catch((error) => {
-        console.error(`Database connection error: ${error.message}`);
+//         // App connection
+//         app.listen(PORT, () => {
+//             console.log(`Listening on port ${PORT}`)
+//         })
+//     })
+//     .catch((error) => {
+//         console.error(`Database connection error: ${error.message}`);
+// })
+
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`)
 })
