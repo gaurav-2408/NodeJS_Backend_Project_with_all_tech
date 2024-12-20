@@ -30,6 +30,12 @@ app.get('/login', (req, res)=>{
     res.sendFile(__dirname + '/views/login.html')
 }) 
 
+app.get('/logout', (req, res) => {
+    // Instruct the client to remove tokens from local storage or cookies
+    res.send({ message: 'Logged out successfully. Please remove tokens from client storage.' });
+    //res.redirect('/login')
+});
+
 app.get('/auth/github',
     passport.authenticate('github'));
   
@@ -39,11 +45,6 @@ app.get('/auth/github/callback',
       // Successful authentication, redirect home.
       res.redirect('/');
 });
-
-// passport.authenticate('github', { session: false }),
-// (req, res) => {
-//     res.json(req.user); // Handle the user directly without sessions
-// }
 
 console.log('MongoDB URL:', process.env.MONGO_DB_URL);
 logger.error('an error occ from index.js')
