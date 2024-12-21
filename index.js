@@ -32,8 +32,8 @@ app.get('/login', (req, res)=>{
 
 app.get('/logout', (req, res) => {
     // Instruct the client to remove tokens from local storage or cookies
-    res.send({ message: 'Logged out successfully. Please remove tokens from client storage.' });
-    //res.redirect('/login')
+    //res.send({ message: 'Logged out successfully. Please remove tokens from client storage.' });
+    res.redirect('/login')
 });
 
 app.get('/auth/github',
