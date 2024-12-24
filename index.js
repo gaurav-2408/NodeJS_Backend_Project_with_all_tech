@@ -5,6 +5,7 @@ const appLogRoute = require('./routes/applog.route.js')
 const dotenv = require('dotenv')
 const logger = require('./logger.js')
 const passport = require('passport')
+const exp_session = require('express-session')
 require('./auth.js');
 
 // Load environment variables
@@ -15,6 +16,7 @@ const PORT = process.env.PORT
 
 // Middleware
 app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
@@ -40,7 +42,7 @@ app.get('/auth/github',
     passport.authenticate('github'));
   
 app.get('/auth/github/callback', 
-    passport.authenticate('github', { failureRedirect: '/login', session: false}),
+    passport.authenticate('github', { failureRedirect: '/login', session: true}),
     function(req, res) {
       // Successful authentication, redirect home.
       res.redirect('/');
