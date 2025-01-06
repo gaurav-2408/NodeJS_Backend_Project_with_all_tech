@@ -20,6 +20,7 @@
     "nodemon": "^3.1.7",
     "passport": "^0.7.0",
     "passport-github": "^1.1.0",
+    "random-key": "^0.3.2",
     "snyk": "^1.1294.2",
     "winston": "^2.4.6"
   }

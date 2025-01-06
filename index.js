@@ -6,6 +6,7 @@ const dotenv = require('dotenv')
 const logger = require('./logger.js')
 const passport = require('passport')
 const exp_session = require('express-session')
+const { generateRandomKeys } = require('./generateRandomKeys.js')
 require('./auth.js');
 
 // Load environment variables
@@ -47,7 +48,7 @@ app.get('/auth/github/callback',
       // Successful authentication, redirect home.
       res.redirect('/');
 });
-
+console.log(generateRandomKeys)
 console.log('MongoDB URL:', process.env.MONGO_DB_URL);
 logger.error('an error occ from index.js')
 // Database connection
