@@ -1,70 +1,99 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const productRoute = require('./routes/product.route.js')
-const appLogRoute = require('./routes/applog.route.js')
-const dotenv = require('dotenv')
-const logger = require('./logger.js')
-const passport = require('passport')
-const generateRandomKeys = require('./security/generateRandomKeys.js')
+const express = require('express');
+const mongoose = require('mongoose');
+const productRoute = require('./routes/product.route.js');
+const appLogRoute = require('./routes/applog.route.js');
+const dotenv = require('dotenv');
+const logger = require('./logger.js');
+const passport = require('passport');
+const sessionSecret = require('./security/sessionSecret.js');
+const exp_session = require('express-session');
 require('./security/auth.js');
 
 // Load environment variables
-dotenv.config()
+dotenv.config();
 
-const app = express()
-const PORT = process.env.PORT
-const key = generateRandomKeys()
+const app = express();
+const PORT = process.env.PORT;
+const key = sessionSecret();
 
-// Middleware
+// Middleware for parsing request body
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Configure `express-session`
+app.use(
+  exp_session({
+    secret: key || 'defaultSecret', // Use a strong secret
+    resave: false, // Prevent unnecessary session saves
+    saveUninitialized: false, // Don't save empty sessions
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+    },
+  })
+);
+
+// Initialize Passport and use sessions
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+
+//serialize user to login
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+  
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+});
+
 
 // Routes
-app.use('/api/products', productRoute)
-app.use('/api/applog', appLogRoute)
+app.use('/api/products', productRoute);
+app.use('/api/applog', appLogRoute);
 
-//For Oauth we are making login and logout
-app.get('/', (req, res)=>{
-    res.sendFile(__dirname + '/views/dashboard.html')
-}) 
-app.get('/login', (req, res)=>{
-    res.sendFile(__dirname + '/views/login.html')
-}) 
-
+// For OAuth login and logout
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/views/dashboard.html');
+});
+app.get('/login', (req, res) => {
+  res.sendFile(__dirname + '/views/login.html');
+});
 app.get('/logout', (req, res) => {
-    // Instruct the client to remove tokens from local storage or cookies
-    //res.send({ message: 'Logged out successfully. Please remove tokens from client storage.' });
-    res.redirect('/login')
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/login');
+  });
 });
 
-app.get('/auth/github',
-    passport.authenticate('github'));
-  
-app.get('/auth/github/callback', 
-    passport.authenticate('github', { failureRedirect: '/login', session: true}),
-    function(req, res) {
-      // Successful authentication, redirect home.
-      res.redirect('/');
-});
-console.log(key) //--> this works
+// GitHub OAuth routes
+app.get('/auth/github', passport.authenticate('github'));
+app.get(
+  '/auth/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login', session: true }),
+  function (req, res) {
+    res.redirect('/');
+  }
+);
+
+console.log(key); //--> this works
 console.log('MongoDB URL:', process.env.MONGO_DB_URL);
-logger.error('an error occ from index.js')
+logger.error('An error occurred from index.js');
+
 // Database connection
-// mongoose.connect(process.env.MONGO_DB_URL)
-//     .then(() => {
-//         console.log(`Connected to database`)
+// mongoose
+//   .connect(process.env.MONGO_DB_URL)
+//   .then(() => {
+//     console.log(`Connected to database`);
 
-//         // App connection
-//         app.listen(PORT, () => {
-//             console.log(`Listening on port ${PORT}`)
-//         })
-//     })
-//     .catch((error) => {
-//         console.error(`Database connection error: ${error.message}`);
-// })
-
+//     // Start the server
+//     app.listen(PORT, () => {
+//       console.log(`Listening on port ${PORT}`);
+//     });
+//   })
+//   .catch((error) => {
+//     console.error(`Database connection error: ${error.message}`);
+//   });
 app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
-})
+    console.log(`Listening on port ${PORT}`);
+  });

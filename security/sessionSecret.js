@@ -1,7 +1,7 @@
 const randomKeyG = require('random-key')
 
-const generateRandomKeys =()=>{
+const sessionSecret =()=>{
     return randomKeyG.generateBase30(5);
 }
 
-module.exports = generateRandomKeys
+module.exports = sessionSecret
