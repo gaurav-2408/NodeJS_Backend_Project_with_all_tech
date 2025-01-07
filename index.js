@@ -5,15 +5,15 @@ const appLogRoute = require('./routes/applog.route.js')
 const dotenv = require('dotenv')
 const logger = require('./logger.js')
 const passport = require('passport')
-const exp_session = require('express-session')
-const { generateRandomKeys } = require('./generateRandomKeys.js')
-require('./auth.js');
+const generateRandomKeys = require('./security/generateRandomKeys.js')
+require('./security/auth.js');
 
 // Load environment variables
 dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT
+const key = generateRandomKeys()
 
 // Middleware
 app.use(passport.initialize());
@@ -48,7 +48,7 @@ app.get('/auth/github/callback',
       // Successful authentication, redirect home.
       res.redirect('/');
 });
-console.log(generateRandomKeys)
+console.log(key) //--> this works
 console.log('MongoDB URL:', process.env.MONGO_DB_URL);
 logger.error('an error occ from index.js')
 // Database connection
