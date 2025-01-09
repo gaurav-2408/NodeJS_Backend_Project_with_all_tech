@@ -5,7 +5,7 @@ const winston = require('winston');
 // Define log file path
 const logFilePath = path.join(__dirname, 'app.log');
 
-// Function to truncate log file if it exceeds 10 linessssssssssssssssss
+// Function to truncate log file if it exceeds 10 lines
 function truncateLogsIfNeeded() {
     if (fs.existsSync(logFilePath)) {
         const logs = fs.readFileSync(logFilePath, 'utf8').split('\n');
