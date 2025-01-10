@@ -2,7 +2,8 @@
 -[x]implement security - snyk done
 -[x]implement OAuth2.0 - done
 -[x]implement rate limiting
--[]implement CORS
+-[x]implement CORS
+-[x]implement app session
 -[x]api routes security with random keys generator
 -[]implement use of kafka - remaining
 -[]deploy to a server -  remaining

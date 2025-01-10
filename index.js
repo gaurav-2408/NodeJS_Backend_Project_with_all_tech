@@ -36,7 +36,8 @@ app.use(
 // Initialize Passport and use sessions
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors())
+app.use(cors({origin: `http://localhost:${process.env.PORT}`}))
+
 //serialize user to login
 passport.serializeUser(function(user, done) {
     done(null, user);
