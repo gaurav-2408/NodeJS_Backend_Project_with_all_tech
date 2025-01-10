@@ -1,7 +1,7 @@
 -[x]implement logging - done
 -[x]implement security - snyk done
 -[x]implement OAuth2.0 - done
--[]implement rate limiting
+-[x]implement rate limiting
 -[]implement CORS
 -[x]api routes security with random keys generator
 -[]implement use of kafka - remaining
