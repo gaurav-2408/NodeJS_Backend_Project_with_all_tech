@@ -5,6 +5,7 @@ const appLogRoute = require('./routes/applog.route.js');
 const dotenv = require('dotenv');
 const logger = require('./logger.js');
 const passport = require('passport');
+const cors = require('cors')
 const sessionSecret = require('./security/sessionSecret.js');
 const exp_session = require('express-session');
 require('./security/auth.js');
@@ -35,7 +36,7 @@ app.use(
 // Initialize Passport and use sessions
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(cors())
 //serialize user to login
 passport.serializeUser(function(user, done) {
     done(null, user);
