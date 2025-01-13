@@ -19,17 +19,16 @@ jobs:
 
     - name: Debug Paths
       run: |
-        echo "Current Directory Contents:"
+        echo "Listing all files in the repository:"
         ls -al
-        echo "Checking for package-lock.json:"
+        echo "Searching for package-lock.json:"
         find . -name 'package-lock.json'
 
     - name: Set up Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: false
-        cache-dependency-path: 'package-lock.json'
+        cache-dependency-path: '**/package-lock.json'  # Use wildcard for flexibility
 
     - run: npm ci
 
