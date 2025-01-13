@@ -3,6 +3,7 @@ const passport  = require('passport')
 const dotenv = require('dotenv')
 dotenv.config()
 
+//passport setup
 passport.use(new GitHubStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
