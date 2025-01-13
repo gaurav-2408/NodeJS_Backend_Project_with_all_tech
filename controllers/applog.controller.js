@@ -26,7 +26,7 @@
 const fs = require('fs');
 const path = require('path');
 const appLog = require('../models/applog.model'); // Replace with your actual Mongoose model
-const logger = require('../logger.js')
+const logger = require('../utils/logger.js')
 
 const createAppLog = async (AppName) => {
     const logFilePath = path.resolve(__dirname, 'app.log');

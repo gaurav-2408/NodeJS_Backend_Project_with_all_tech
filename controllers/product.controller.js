@@ -1,5 +1,5 @@
 // controller will have logic of API
-const logger = require('../logger.js')
+const logger = require('../utils/logger.js')
 const Product = require('../models/product.model.js') 
 
 
