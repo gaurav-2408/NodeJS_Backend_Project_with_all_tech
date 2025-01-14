@@ -28,7 +28,7 @@ app.use(
     resave: false, // Prevent unnecessary session saves
     saveUninitialized: false, // Don't save empty sessions
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      maxAge: 1 * 60 * 1000, // 1 minute in milliseconds
     },
   })
 );
@@ -36,7 +36,7 @@ app.use(
 // Initialize Passport and use sessions
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors({origin: `http://localhost:${process.env.PORT}`}))
+app.use(cors({origin: `http://localhost:${PORT}`}))
 
 //serialize user to login
 passport.serializeUser(function(user, done) {
@@ -59,14 +59,19 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
   res.sendFile(__dirname + '/views/login.html');
 });
+
 app.get('/logout', (req, res) => {
-  req.logout(function (err) {
+  req.session.destroy((err) => {
     if (err) {
-      return next(err);
+      console.error('Failed to destroy session:', err);
+      res.status(500).send('Could not log out. Please try again.');
+    } else {
+      res.clearCookie('connect.sid'); 
+      res.redirect('/login');
     }
-    res.redirect('/login');
   });
 });
+
 
 // GitHub OAuth routes
 app.get('/auth/github', passport.authenticate('github'));
