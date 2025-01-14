@@ -3,7 +3,7 @@
 -[x]implement OAuth2.0 - done
 -[x]implement rate limiting
 -[x]implement CORS
--[]implement app session
+-[x]implement app session
 -[x]api routes security with random keys generator
 -[]implement use of kafka - remaining
 -[]deploy to a server -  remaining

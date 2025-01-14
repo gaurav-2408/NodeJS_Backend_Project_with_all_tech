@@ -38,16 +38,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({origin: `http://localhost:${PORT}`}))
 
-//serialize user to login
-passport.serializeUser(function(user, done) {
-    done(null, user);
-});
-  
-passport.deserializeUser(function(user, done) {
-    done(null, user);
-});
-
-
 // Routes
 app.use('/api/products', productRoute);
 app.use('/api/applog', appLogRoute);
@@ -57,6 +47,9 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/dashboard.html');
 });
 app.get('/login', (req, res) => {
+  passport.serializeUser(function(user, done) {
+    done(null, user);
+  });
   res.sendFile(__dirname + '/views/login.html');
 });
 
@@ -72,6 +65,9 @@ app.get('/logout', (req, res) => {
   });
 });
 
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
 // GitHub OAuth routes
 app.get('/auth/github', passport.authenticate('github'));
