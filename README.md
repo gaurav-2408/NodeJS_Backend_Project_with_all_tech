@@ -9,7 +9,8 @@
 -[]deploy to a server -  remaining
 -[]Connect with Docker
 -[]Connect with AWS
-
+-[]AWS stepfuction can be better
 
 mongo connection is disabled, please connect at home
+
  
