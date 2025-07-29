@@ -10,6 +10,8 @@
 -[]Connect with Docker
 -[]Connect with AWS
 -[]AWS stepfuction can be better
+-[]enhancements
+-[] pipeline setup
 
 mongo connection is disabled, please connect at home
 
